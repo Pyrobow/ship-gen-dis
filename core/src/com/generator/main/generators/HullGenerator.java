@@ -1,10 +1,8 @@
 package com.generator.main.generators;
 
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class HullGenerator {
@@ -12,18 +10,16 @@ public class HullGenerator {
     private float marginSize;
     private int targetArea;
     private float sideLength;
-    private int pixelsPerStep;
     private int possibleStepsPerMove;
     private Random rand = new Random();
 
 
-    public HullGenerator(int minArea, float marginSize, int pixelsPerStep, int possibleStepsPerMove){
+    public HullGenerator(int minArea, float marginSize, int possibleStepsPerMove){
         this.minArea = minArea;
         this.marginSize = marginSize;
-        this.pixelsPerStep = pixelsPerStep;
         this.possibleStepsPerMove = possibleStepsPerMove;
-        targetArea = Math.round(minArea + (minArea * marginSize))*pixelsPerStep;
-        sideLength = (float) (Math.sqrt(targetArea))*pixelsPerStep;
+        targetArea = Math.round(minArea + (minArea * marginSize));
+        sideLength = (float) (Math.sqrt(targetArea));
     }
 
     public Polygon generateSymmetricHull() throws Exception {
@@ -34,7 +30,6 @@ public class HullGenerator {
         ArrayList<Float> rightPath = new ArrayList<Float>();
         RandomWalker leftWalker = new RandomWalker(rand.nextFloat(0, sideLength/2),
                 0,
-                pixelsPerStep,
                 possibleStepsPerMove);
         leftPath.add(leftWalker.getXY()[0]);
         leftPath.add(leftWalker.getXY()[1]);

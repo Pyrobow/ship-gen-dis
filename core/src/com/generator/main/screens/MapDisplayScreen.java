@@ -29,7 +29,7 @@ public class MapDisplayScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
         this.reqGen = new RequirementsGenerator();
         ShipSpecification specification = reqGen.createSpecification();
-        this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 25, 3);
+        this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 3);
     }
 
     @Override
