@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.generator.main.GeneratorMain;
 import com.generator.main.generators.HullGenerator;
+import com.generator.main.generators.RequirementsGenerator;
+import com.generator.main.objects.ShipSpecification;
 
 public class MapDisplayScreen implements Screen {
 
@@ -17,14 +19,17 @@ public class MapDisplayScreen implements Screen {
 
     final GeneratorMain main;
     final HullGenerator hullGen;
+    final RequirementsGenerator reqGen;
     OrthographicCamera camera;
 
-    public MapDisplayScreen(GeneratorMain main){
+    public MapDisplayScreen(GeneratorMain main) {
         this.main = main;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        this.hullGen = new HullGenerator(1000, 0.1F, 25, 3);
+        this.reqGen = new RequirementsGenerator();
+        ShipSpecification specification = reqGen.createSpecification();
+        this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 25, 3);
     }
 
     @Override
