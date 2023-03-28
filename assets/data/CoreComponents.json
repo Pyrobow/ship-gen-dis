@@ -1,0 +1,128 @@
+{
+  "powerPlant": [
+    {
+      "name": "Type 1",
+      "tonnage": 0.015,
+      "componentType": "powerPlant",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {
+        "mDrive": 0,
+        "jDrive": 0
+      }
+    }
+  ],
+  "mDrive": [
+    {
+      "name": "Type 0",
+      "tonnage": 0.5,
+      "componentType": "mDrive",
+      "exteriorRequired": true,
+      "description": "Test",
+      "constraints": {
+        "powerPlant": 0,
+        "jDrive": 0
+      }
+    }
+  ],
+  "jDrive": [
+    {
+      "name": "Type 1",
+      "tonnage": 0.03,
+      "componentType": "jDrive",
+      "exteriorRequired": true,
+      "description": "Test",
+      "constraints": {
+        "mDrive": 0,
+        "powerPlant": 0
+      }
+    }
+  ],
+  "bridge": [
+    {
+      "name": "Standard Bridge",
+      "tonnage": 0.02,
+      "componentType": "bridge",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    }
+  ],
+  "electronic": [
+    {
+      "name": "Baseline",
+      "tonnage": 0,
+      "componentType": "electronic",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    },
+    {
+      "name": "Model/1",
+      "tonnage": 1,
+      "componentType": "electronic",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    }
+  ],
+  "weaponMount": [
+    {
+      "name": "Single Turret",
+      "tonnage": 2,
+      "componentType": "armament",
+      "exteriorRequired": true,
+      "description": "Test",
+      "hardpointsUsed": 1,
+      "weaponSlots": 1,
+      "mountType": "Turret",
+      "assignedWeapons": null,
+      "constraints": {}
+    }
+  ],
+  "weapon": [
+    {
+      "name": "Sandcaster",
+      "mountType": "Turret",
+      "slotsUsed": 1
+    }
+  ],
+  "shield": [
+    {
+      "name": "Meson Shield",
+      "tonnage": 50,
+      "componentType": "shield",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    }
+  ],
+  "accommodation": [
+    {
+      "name": "Stateroom",
+      "tonnage": 4,
+      "componentType": "accommodation",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    }
+  ],
+  "storage": [
+    {
+      "name": "Cargo",
+      "tonnage": 0,
+      "componentType": "storage",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    },
+    {
+      "name": "Fuel",
+      "tonnage": 0,
+      "componentType": "storage",
+      "exteriorRequired": false,
+      "description": "Test",
+      "constraints": {}
+    }
+  ]
+}

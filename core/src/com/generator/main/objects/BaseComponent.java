@@ -1,6 +1,8 @@
 package com.generator.main.objects;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+
 import java.util.Map;
 
 public class BaseComponent {
@@ -8,25 +10,38 @@ public class BaseComponent {
     private String name;
     private String description;
     private String componentType;
-    private int powerUsed;
     private float tonnage;
+    private int level;
     private boolean exteriorRequired;
-    private Array<Map<String, Integer>> constraints;
+    private ObjectMap<String, Integer> constraints;
+
+    public BaseComponent(){}
 
     public BaseComponent(String name,
                          String description,
                          String componentType,
-                         int powerUsed,
                          float tonnage,
+                         int level,
                          boolean exteriorRequired,
-                         Array<Map<String, Integer>> constraints) {
+                         ObjectMap<String, Integer> constraints){
         this.name = name;
         this.description = description;
         this.componentType = componentType;
-        this.powerUsed = powerUsed;
         this.tonnage = tonnage;
+        this.level = level;
         this.exteriorRequired = exteriorRequired;
         this.constraints = constraints;
+
+    }
+
+    public BaseComponent deepCopy(){
+        return new BaseComponent(this.name,
+                this.description,
+                this.componentType,
+                this.tonnage,
+                this.level,
+                this.exteriorRequired,
+                this.constraints);
     }
 
     public String getName() {
@@ -37,10 +52,6 @@ public class BaseComponent {
         return description;
     }
 
-    public int getPowerUsed() {
-        return powerUsed;
-    }
-
     public float getTonnage() {
         return tonnage;
     }
@@ -49,7 +60,19 @@ public class BaseComponent {
         return exteriorRequired;
     }
 
-    public Array<Map<String, Integer>> getConstraints() {
+    public ObjectMap<String, Integer> getConstraints() {
         return constraints;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public String getComponentType(){
+        return componentType;
+    }
+
+    public void setTonnage(float tonnage) {
+        this.tonnage = tonnage;
     }
 }

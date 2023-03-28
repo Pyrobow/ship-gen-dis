@@ -1,21 +1,27 @@
 package com.generator.main.objects;
 
-import com.badlogic.gdx.utils.Array;
+public class WeaponComponent {
+    private String name;
+    private String mountType;
+    private int slotsUsed;
 
-import java.util.Map;
+    public WeaponComponent(){}
 
-public class WeaponComponent extends BaseComponent{
+    public WeaponComponent(String name, String mountType, int slotsUsed){
+        this.name = name;
+        this.mountType = mountType;
+        this.slotsUsed = slotsUsed;
+    }
 
-    private int hardpointsUsed;
-    public WeaponComponent(String name,
-                           String description,
-                           String componentType,
-                           int powerUsed,
-                           float tonnage,
-                           boolean exteriorRequired,
-                           Array<Map<String, Integer>> constraints,
-                           int hardpointsUsed) {
-        super(name, description, componentType, powerUsed, tonnage, exteriorRequired, constraints);
-        this.hardpointsUsed = hardpointsUsed;
+    public WeaponComponent deepCopy(){
+        return new WeaponComponent(this.name, this.mountType, this.slotsUsed);
+    }
+
+    public String getMountType() {
+        return mountType;
+    }
+
+    public int getSlotsUsed() {
+        return slotsUsed;
     }
 }
