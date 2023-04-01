@@ -1,29 +1,25 @@
 package com.generator.main.generators;
 
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class HullGenerator {
     private int minArea;
     private float marginSize;
     private int targetArea;
-    private float sideLength;
-    private int pixelsPerStep;
+    private int sideLength;
     private int possibleStepsPerMove;
     private Random rand = new Random();
 
 
-    public HullGenerator(int minArea, float marginSize, int pixelsPerStep, int possibleStepsPerMove){
+    public HullGenerator(int minArea, float marginSize, int possibleStepsPerMove){
         this.minArea = minArea;
         this.marginSize = marginSize;
-        this.pixelsPerStep = pixelsPerStep;
         this.possibleStepsPerMove = possibleStepsPerMove;
-        targetArea = Math.round(minArea + (minArea * marginSize))*pixelsPerStep;
-        sideLength = (float) (Math.sqrt(targetArea))*pixelsPerStep;
+        targetArea = Math.round(minArea + (minArea * marginSize));
+        sideLength = (int) (Math.sqrt(targetArea));
     }
 
     public Polygon generateSymmetricHull() throws Exception {
@@ -32,9 +28,8 @@ public class HullGenerator {
         Polygon output = new Polygon();
         ArrayList<Float> leftPath = new ArrayList<Float>();
         ArrayList<Float> rightPath = new ArrayList<Float>();
-        RandomWalker leftWalker = new RandomWalker(rand.nextFloat(0, sideLength/2),
+        RandomWalker leftWalker = new RandomWalker(rand.nextInt(0, sideLength/2),
                 0,
-                pixelsPerStep,
                 possibleStepsPerMove);
         leftPath.add(leftWalker.getXY()[0]);
         leftPath.add(leftWalker.getXY()[1]);
@@ -43,7 +38,7 @@ public class HullGenerator {
         while (!(finished)){
             for (int i = 0; i<5; i++){
                 try {
-                    leftWalker.move(0.0F, sideLength/2);
+                    leftWalker.move(0, sideLength/2);
                     errorCount = 0;
                     leftPath.add(leftWalker.getXY()[0]);
                     leftPath.add(leftWalker.getXY()[1]);
