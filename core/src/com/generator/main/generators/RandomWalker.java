@@ -5,12 +5,12 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
 public class RandomWalker {
-    float posX;
-    float posY;
+    int posX;
+    int posY;
     Random rand;
     int facing;
     int possibleStepsPerMove;
-    public RandomWalker(float startX, float startY, int possibleStepsPerMove) {
+    public RandomWalker(int startX, int startY, int possibleStepsPerMove) {
         this.posX = startX;
         this.posY = startY;
         this.possibleStepsPerMove = possibleStepsPerMove;
@@ -45,8 +45,8 @@ public class RandomWalker {
     }
 
 
-    public void move(Float xLeft, Float xRight) throws Exception {
-        float tempX = 0;
+    public void move(int xLeft, int xRight) throws Exception {
+        int tempX = 0;
         int steps = rand.nextInt(1, possibleStepsPerMove);
         switch (facing) {
             case 0:
