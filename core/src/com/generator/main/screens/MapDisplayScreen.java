@@ -12,6 +12,7 @@ import com.generator.main.GeneratorMain;
 import com.generator.main.generators.HullGenerator;
 import com.generator.main.generators.RequirementsGenerator;
 import com.generator.main.objects.ShipSpecification;
+import com.generator.main.utils.PolygonSubdivider;
 
 public class MapDisplayScreen implements Screen {
 
@@ -21,6 +22,7 @@ public class MapDisplayScreen implements Screen {
     final HullGenerator hullGen;
     final RequirementsGenerator reqGen;
     OrthographicCamera camera;
+    final PolygonSubdivider subdivider;
 
     public MapDisplayScreen(GeneratorMain main) {
         this.main = main;
@@ -30,6 +32,7 @@ public class MapDisplayScreen implements Screen {
         this.reqGen = new RequirementsGenerator();
         ShipSpecification specification = reqGen.createSpecification();
         this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 3);
+        subdivider = new PolygonSubdivider(16);
     }
 
     @Override
