@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.generator.main.GeneratorMain;
 import com.generator.main.generators.HullGenerator;
 import com.generator.main.generators.RequirementsGenerator;
+import com.generator.main.generators.RoomPlacer;
+import com.generator.main.objects.MapTile;
 import com.generator.main.objects.ShipSpecification;
 import com.generator.main.utils.PolygonSubdivider;
 
@@ -23,6 +26,9 @@ public class MapDisplayScreen implements Screen {
     final RequirementsGenerator reqGen;
     OrthographicCamera camera;
     final PolygonSubdivider subdivider;
+    RoomPlacer placer;
+    MapTile[][] baseLayer;
+    ShipSpecification specification;
 
     public MapDisplayScreen(GeneratorMain main) {
         this.main = main;
@@ -30,7 +36,7 @@ public class MapDisplayScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         this.reqGen = new RequirementsGenerator();
-        ShipSpecification specification = reqGen.createSpecification();
+        specification = reqGen.createSpecification();
         this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 3);
         subdivider = new PolygonSubdivider(16);
     }
@@ -47,15 +53,23 @@ public class MapDisplayScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
             try {
                 hullShape = this.hullGen.generateSymmetricHull();
+                baseLayer = subdivider.polygonToArray(hullShape);
+                placer = new RoomPlacer(baseLayer, specification);
+                placer.placeAllRooms();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
         if (hullShape != null){
             main.shapeRen.setProjectionMatrix(camera.combined);
-            main.shapeRen.begin(ShapeRenderer.ShapeType.Line);
-            main.shapeRen.setColor(Color.PINK);
-            main.shapeRen.polygon(hullShape.getVertices());
+            main.shapeRen.begin(ShapeRenderer.ShapeType.Filled);
+            for (int i = 0; i < baseLayer.length; i++){
+                for (int j = 0; j < baseLayer[0].length; j++){
+                    Rectangle rect = baseLayer[i][j].getRect();
+                    main.shapeRen.setColor(baseLayer[i][j].getColour());
+                    main.shapeRen.rect(rect.getX(),rect.getY(), rect.getWidth(), rect.getHeight());
+                }
+            }
             main.shapeRen.end();
         }
 

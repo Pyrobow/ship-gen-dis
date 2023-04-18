@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 import java.util.ArrayList;
 
-public class WeaponMountComponent {
+public class WeaponMountComponent extends BaseComponent{
 
     private String name;
     private String description;
@@ -18,7 +18,9 @@ public class WeaponMountComponent {
     private int weaponSlots;
     private String mountType;
 
-    public WeaponMountComponent(){}
+    public WeaponMountComponent(){
+        super();
+    }
 
     public WeaponMountComponent(String name,
                                 String description,
@@ -31,13 +33,7 @@ public class WeaponMountComponent {
                                 ArrayList<WeaponComponent> assignedWeapons,
                                 int weaponSlots,
                                 String mountType){
-        this.name = name;
-        this.description = description;
-        this.componentType = componentType;
-        this.tonnage = tonnage;
-        this.level = level;
-        this.exteriorRequired = exteriorRequired;
-        this.constraints = constraints;
+        super(name,description,componentType,tonnage,level,exteriorRequired,constraints);
         this.hardpointsUsed = hardpointsUsed;
         this.assignedWeapons = assignedWeapons;
         this.weaponSlots = weaponSlots;
