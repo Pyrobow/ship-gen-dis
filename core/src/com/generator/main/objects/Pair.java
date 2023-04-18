@@ -16,4 +16,15 @@ public class Pair<I , B> {
     public B second(){
         return this.second;
     }
+    public boolean pairEquals(Pair pair){
+        return pair.first().equals(first) && pair.second().equals(second);
+    }
+
+    public void setFirst(I first) {
+        this.first = first;
+    }
+
+    public void setSecond(B second) {
+        this.second = second;
+    }
 }

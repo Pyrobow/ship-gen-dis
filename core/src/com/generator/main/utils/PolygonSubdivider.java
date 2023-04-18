@@ -1,9 +1,10 @@
 package com.generator.main.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import com.generator.main.objects.MapTile;
+import com.generator.main.enums.TileIdents;
 
 public class PolygonSubdivider {
     int tileWidth;
@@ -22,21 +23,24 @@ public class PolygonSubdivider {
         MapTile[][] output = new MapTile[(int) bound.getHeight()][(int) bound.getWidth()];
         for (int i = 0; i < output.length; i++){
             for (int j = 0; j < output[i].length; j++){
+                Rectangle tempRect = new Rectangle(j*tileWidth, i*tileWidth, tileWidth, tileWidth);
                 if (input.contains(j,i)){
-                    output[i][j] = createFilledMapTile("poly");
+                    output[i][j] = createFilledMapTile(TileIdents.HULL);
+                    output[i][j].setColour(new Color(255,0,0,1));
                 } else {
                     output[i][j] = createBlankMapTile();
                 }
+                output[i][j].setRect(tempRect);
             }
         }
         return output;
     }
 
     private MapTile createBlankMapTile(){
-        return new MapTile(this.tileWidth, "empty");
+        return new MapTile(this.tileWidth, TileIdents.EMPTY);
     }
 
-    private MapTile createFilledMapTile(String ident){
+    private MapTile createFilledMapTile(TileIdents ident){
         return new MapTile(this.tileWidth, ident);
     }
 }
