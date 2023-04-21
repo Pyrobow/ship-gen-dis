@@ -28,7 +28,7 @@ public class RequirementsGenerator {
     }
 
     public ShipSpecification createSpecification() {
-        int hull = rand.nextInt(100, 10001);
+        int hull = rand.nextInt(100, 10000);
         boolean systemShip = rand.nextBoolean();
         boolean militaryShip = rand.nextBoolean();
         int usedHull = 0;

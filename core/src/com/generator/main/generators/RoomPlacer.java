@@ -57,9 +57,8 @@ public class RoomPlacer {
 
         Pair<Integer, Integer> chosen = possibleLocations.get(rand.nextInt(0, possibleLocations.size()));
         baseLayer[chosen.first()][chosen.second()].setAssignedComponent(component);
-        baseLayer[chosen.first()][chosen.second()].setColour(new Color(rand.nextFloat(255),
-                rand.nextFloat(255),
-                rand.nextFloat(255), 1));
+        baseLayer[chosen.first()][chosen.second()].setIdent(TileIdents.ROOM);
+        baseLayer[chosen.first()][chosen.second()].setColour(new Color(0,0,255, 1));
         return chosen;
     }
 

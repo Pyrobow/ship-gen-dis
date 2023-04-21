@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.generator.main.GeneratorMain;
 import com.generator.main.generators.HullGenerator;
 import com.generator.main.generators.RequirementsGenerator;
+import com.generator.main.generators.RoomGrowthManager;
 import com.generator.main.generators.RoomPlacer;
 import com.generator.main.objects.MapTile;
 import com.generator.main.objects.ShipSpecification;
@@ -27,6 +28,7 @@ public class MapDisplayScreen implements Screen {
     OrthographicCamera camera;
     final PolygonSubdivider subdivider;
     RoomPlacer placer;
+    RoomGrowthManager growthManager;
     MapTile[][] baseLayer;
     ShipSpecification specification;
 
@@ -56,6 +58,9 @@ public class MapDisplayScreen implements Screen {
                 baseLayer = subdivider.polygonToArray(hullShape);
                 placer = new RoomPlacer(baseLayer, specification);
                 placer.placeAllRooms();
+                growthManager = new RoomGrowthManager(specification, baseLayer);
+                growthManager.growAllRooms();
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

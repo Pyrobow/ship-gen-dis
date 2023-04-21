@@ -35,7 +35,7 @@ public class MapTile {
     }
 
     public void setColour(Color colour) {
-        this.colour = colour;
+        this.colour.set(colour);
     }
 
     public void setRect(Rectangle rect) {
