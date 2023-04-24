@@ -64,4 +64,33 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
     }
+
+
+// Code below from https://github.com/TomGrill/gdx-testing
+    project(":tests") {
+        apply plugin: "java"
+
+        sourceSets.test.java.srcDirs = ["src/"]
+
+        dependencies {
+
+            "implementation"(project(":core"))
+
+            "implementation"("junit:junit:4.13.2")
+            "implementation"("org.mockito:mockito-core:5.1.1")
+
+            "implementation"("com.badlogicgames.gdx:gdx-backend-lwjgl3:${gdxVersion}")
+            "implementation"("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+            "implementation"("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+            "implementation"("com.badlogicgames.gdx:gdx:$gdxVersion")
+
+            "testImplementation"("junit:junit:4.13.2")
+            "testImplementation"("org.mockito:mockito-core:5.1.1")
+            "testImplementation"("io.mockk:mockk:1.9.3")
+
+            "testImplementation"("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+            "testImplementation"("com.badlogicgames.gdx:gdx:$gdxVersion")
+            "testImplementation"("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+        }
+    }
 }
