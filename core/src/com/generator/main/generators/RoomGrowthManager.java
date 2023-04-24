@@ -1,10 +1,7 @@
 package com.generator.main.generators;
 
 import com.badlogic.gdx.utils.OrderedMap;
-import com.generator.main.objects.BaseComponent;
-import com.generator.main.objects.MapTile;
-import com.generator.main.objects.Pair;
-import com.generator.main.objects.ShipSpecification;
+import com.generator.main.objects.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,12 +11,14 @@ public class RoomGrowthManager {
     ArrayList<RoomGrower> ongoingGrowth;
     ArrayList<RoomGrower> finishedGrowth;
     MapTile[][] baselayer;
-    private OrderedMap<String, ArrayList<BaseComponent>> componentsByType;
+    private final OrderedMap<String, ArrayList<BaseComponent>> componentsByType;
+    private final ArrayList<WeaponMountComponent> armaments;
 
     public RoomGrowthManager(ShipSpecification specification, MapTile[][] baselayer) throws Exception {
         this.baselayer = baselayer;
         this.specification = specification;
         componentsByType = specification.getComponentsByType();
+        armaments = specification.getWeapons();
         ongoingGrowth = createNewGrowers();
         finishedGrowth = new ArrayList<>();
 
@@ -29,11 +28,12 @@ public class RoomGrowthManager {
         ArrayList<RoomGrower> output = new ArrayList<>();
         Iterator<String> typeIterator = componentsByType.keys();
         while (typeIterator.hasNext()){
-            Iterator<BaseComponent> roomIter = componentsByType.get(typeIterator.next()).iterator();
-            while (roomIter.hasNext()){
-                BaseComponent room = roomIter.next();
+            for (BaseComponent room : componentsByType.get(typeIterator.next())) {
                 output.add(new RoomGrower(room, baselayer));
             }
+        }
+        for (WeaponMountComponent weapon : armaments){
+            output.add(new RoomGrower(weapon, baselayer));
         }
         return output;
     }
@@ -48,9 +48,7 @@ public class RoomGrowthManager {
                 }
             }
             for (RoomGrower grower : finishedGrowth){
-                if (ongoingGrowth.contains(grower)){
-                    ongoingGrowth.remove(grower);
-                }
+                ongoingGrowth.remove(grower);
             }
         }
     }
