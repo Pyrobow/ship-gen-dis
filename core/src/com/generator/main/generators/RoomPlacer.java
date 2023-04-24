@@ -11,11 +11,12 @@ import java.util.Objects;
 import java.util.Random;
 
 public class RoomPlacer {
-    private MapTile[][] baseLayer;
-    private OrderedMap<String, HeatMap> heatMaps;
-    private ShipSpecification shipSpec;
-    private OrderedMap<String, ArrayList<BaseComponent>> componentsByType;
-    private Random rand;
+    private final MapTile[][] baseLayer;
+    private final OrderedMap<String, HeatMap> heatMaps;
+    private final ShipSpecification shipSpec;
+    private final OrderedMap<String, ArrayList<BaseComponent>> componentsByType;
+    private final ArrayList<WeaponMountComponent> armaments;
+    private final Random rand;
     final private int DROPOFF = 5;
 
     public RoomPlacer(MapTile[][] baseLayer, ShipSpecification shipSpec){
@@ -23,20 +24,23 @@ public class RoomPlacer {
         this.shipSpec = shipSpec;
         rand = new Random();
         componentsByType = shipSpec.getComponentsByType();
+        armaments = shipSpec.getWeapons();
         heatMaps = createEmptyHeatmaps();
     }
 
     public void placeAllRooms(){
-        OrderedMap<String, ArrayList<BaseComponent>> rooms = shipSpec.getComponentsByType();
-        Iterator<String> typeIterator = rooms.keys();
+        Iterator<String> typeIterator = componentsByType.keys();
         while (typeIterator.hasNext()){
-            Iterator<BaseComponent> roomIter = rooms.get(typeIterator.next()).iterator();
-            while (roomIter.hasNext()){
-                BaseComponent room = roomIter.next();
+            for (BaseComponent room : componentsByType.get(typeIterator.next())) {
                 Pair<Integer, Integer> chosen = placeRoom(heatMaps.get(String.format("%s/%s", room.getComponentType(),
                         room.getName())), room);
                 updateAllHeatmaps(room, chosen.second(), chosen.first(), DROPOFF);
             }
+        }
+        for (WeaponMountComponent weapon : armaments){
+            String key = String.format("%s/%s", weapon.getMountType(), weapon.getName());
+            Pair<Integer, Integer> chosen = placeRoom(heatMaps.get(key), weapon);
+            updateAllHeatmaps(weapon, chosen.second(), chosen.first(), DROPOFF);
         }
     }
 
@@ -58,7 +62,7 @@ public class RoomPlacer {
         Pair<Integer, Integer> chosen = possibleLocations.get(rand.nextInt(0, possibleLocations.size()));
         baseLayer[chosen.first()][chosen.second()].setAssignedComponent(component);
         baseLayer[chosen.first()][chosen.second()].setIdent(TileIdents.ROOM);
-        baseLayer[chosen.first()][chosen.second()].setColour(new Color(0,0,255, 1));
+        baseLayer[chosen.first()][chosen.second()].setColour(new Color(255,255,0, 1));
         return chosen;
     }
 
@@ -91,13 +95,17 @@ public class RoomPlacer {
         OrderedMap<String, HeatMap> output = new OrderedMap<>();
         Iterator<String> typeIterator = componentsByType.keys();
         while (typeIterator.hasNext()){
-            Iterator<BaseComponent> iter = componentsByType.get(typeIterator.next()).iterator();
-            while (iter.hasNext()){
-                BaseComponent tempComponent = iter.next();
-                if (!output.containsKey(tempComponent.getName())){
-                    output.put(String.format("%s/%s", tempComponent.getComponentType(),
-                            tempComponent.getName()), createBlankHeatMap(tempComponent.isExteriorRequired(), tempComponent));
+            for (BaseComponent tempComponent : componentsByType.get(typeIterator.next())) {
+                String key = String.format("%s/%s", tempComponent.getComponentType(), tempComponent.getName());
+                if (!output.containsKey(key)) {
+                    output.put(key, createBlankHeatMap(tempComponent.isExteriorRequired(), tempComponent));
                 }
+            }
+        }
+        for (WeaponMountComponent weapon : armaments){
+            String key = String.format("%s/%s", weapon.getMountType(), weapon.getName());
+            if (!output.containsKey(key)) {
+                output.put(key, createBlankHeatMap(weapon.isExteriorRequired(), weapon));
             }
         }
         return output;
@@ -114,8 +122,8 @@ public class RoomPlacer {
                         //Checks to see if the point is on the edge of the array.
                         if (i == 0 || i == baseLayer.length - 1 || j == 0 || j == baseLayer[0].length - 1){
                             heatmapArray[i][j] = 0;
-                        } else if (Objects.equals(baseLayer[i + 1][j].getIdent(), "empty") || Objects.equals(baseLayer[i - 1][j].getIdent(), "empty")
-                                || Objects.equals(baseLayer[i][j + 1].getIdent(), "empty") || Objects.equals(baseLayer[i][j - 1].getIdent(), "empty")) {
+                        } else if (Objects.equals(baseLayer[i + 1][j].getIdent(), TileIdents.EMPTY) || Objects.equals(baseLayer[i - 1][j].getIdent(), TileIdents.EMPTY)
+                                || Objects.equals(baseLayer[i][j + 1].getIdent(), TileIdents.EMPTY) || Objects.equals(baseLayer[i][j - 1].getIdent(), TileIdents.EMPTY)) {
                             heatmapArray[i][j] = 0;
                         }else{
                             heatmapArray[i][j] = -5000;
@@ -126,8 +134,7 @@ public class RoomPlacer {
                 }
             }
         }
-        HeatMap output = new HeatMap(heatmapArray, component.getConstraints());
-        return output;
+        return new HeatMap(heatmapArray, component.getConstraints());
     }
 
     private int calculateManhattan(int x1, int y1, int x2, int y2){
