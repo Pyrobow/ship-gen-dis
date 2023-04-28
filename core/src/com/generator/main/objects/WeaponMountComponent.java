@@ -16,6 +16,8 @@ public class WeaponMountComponent extends BaseComponent{
     private int hardpointsUsed;
     private ArrayList<WeaponComponent> assignedWeapons;
     private int weaponSlots;
+    private int[] crewTonnageRequirement;
+    private int staticCrew;
     private String mountType;
 
     public WeaponMountComponent(){
@@ -29,11 +31,13 @@ public class WeaponMountComponent extends BaseComponent{
                                 int level,
                                 boolean exteriorRequired,
                                 ObjectMap<String, Integer> constraints,
+                                int[] crewPerTon,
+                                int staticCrew,
                                 int hardpointsUsed,
                                 ArrayList<WeaponComponent> assignedWeapons,
                                 int weaponSlots,
                                 String mountType){
-        super(name,description,componentType,tonnage,level,exteriorRequired,constraints);
+        super(name,description,componentType,tonnage,level,exteriorRequired,constraints,crewPerTon, staticCrew);
         this.hardpointsUsed = hardpointsUsed;
         this.assignedWeapons = assignedWeapons;
         this.weaponSlots = weaponSlots;
@@ -48,6 +52,8 @@ public class WeaponMountComponent extends BaseComponent{
                 level,
                 exteriorRequired,
                 constraints,
+                crewTonnageRequirement,
+                staticCrew,
                 hardpointsUsed,
                 assignedWeapons,
                 weaponSlots,
