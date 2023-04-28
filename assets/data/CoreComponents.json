@@ -3,26 +3,32 @@
     {
       "name": "Type 1",
       "tonnage": 0.015,
+      "level": 1,
       "componentType": "powerPlant",
       "exteriorRequired": false,
       "description": "Test",
       "constraints": {
         "mDrive": 0,
         "jDrive": 0
-      }
+      },
+      "crewTonnageRequirement": [1, 35],
+      "staticCrew": 0
     }
   ],
   "mDrive": [
     {
       "name": "Type 0",
       "tonnage": 0.5,
+      "level": 0,
       "componentType": "mDrive",
       "exteriorRequired": true,
       "description": "Test",
       "constraints": {
         "powerPlant": 0,
         "jDrive": 0
-      }
+      },
+      "crewTonnageRequirement": [1, 35],
+      "staticCrew": 0
     }
   ],
   "jDrive": [
@@ -30,12 +36,15 @@
       "name": "Type 1",
       "tonnage": 0.03,
       "componentType": "jDrive",
+      "level": 1,
       "exteriorRequired": true,
       "description": "Test",
       "constraints": {
         "mDrive": 0,
         "powerPlant": 0
-      }
+      },
+      "crewTonnageRequirement": [1, 35],
+      "staticCrew": 0
     }
   ],
   "bridge": [
@@ -45,7 +54,10 @@
       "componentType": "bridge",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     }
   ],
   "electronic": [
@@ -55,7 +67,10 @@
       "componentType": "electronic",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     },
     {
       "name": "Model/1",
@@ -63,7 +78,10 @@
       "componentType": "electronic",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [1, 35],
+      "staticCrew": 0,
+      "level": 1
     }
   ],
   "weaponMount": [
@@ -77,7 +95,10 @@
       "weaponSlots": 1,
       "mountType": "Turret",
       "assignedWeapons": null,
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 1,
+      "level": 0
     }
   ],
   "weapon": [
@@ -94,7 +115,10 @@
       "componentType": "shield",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     }
   ],
   "accommodation": [
@@ -104,25 +128,34 @@
       "componentType": "accommodation",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     }
   ],
   "storage": [
     {
       "name": "Cargo",
-      "tonnage": 0,
+      "tonnage": 0.05,
       "componentType": "storage",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     },
     {
       "name": "Fuel",
-      "tonnage": 0,
+      "tonnage": 0.1,
       "componentType": "storage",
       "exteriorRequired": false,
       "description": "Test",
-      "constraints": {}
+      "constraints": {},
+      "crewTonnageRequirement": [],
+      "staticCrew": 0,
+      "level": 0
     }
   ]
 }

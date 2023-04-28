@@ -1,9 +1,6 @@
 package com.generator.main.objects;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-
-import java.util.Map;
 
 public class BaseComponent {
 
@@ -14,8 +11,11 @@ public class BaseComponent {
     private int level;
     private boolean exteriorRequired;
     private ObjectMap<String, Integer> constraints;
+    private int[] crewTonnageRequirement;
+    private int staticCrew;
 
-    public BaseComponent(){}
+    public BaseComponent() {
+    }
 
     public BaseComponent(String name,
                          String description,
@@ -23,7 +23,9 @@ public class BaseComponent {
                          float tonnage,
                          int level,
                          boolean exteriorRequired,
-                         ObjectMap<String, Integer> constraints){
+                         ObjectMap<String, Integer> constraints,
+                         int[] crewPerTon,
+                         int staticCrew) {
         this.name = name;
         this.description = description;
         this.componentType = componentType;
@@ -31,17 +33,21 @@ public class BaseComponent {
         this.level = level;
         this.exteriorRequired = exteriorRequired;
         this.constraints = constraints;
+        this.crewTonnageRequirement = crewPerTon;
+        this.staticCrew = staticCrew;
 
     }
 
-    public BaseComponent deepCopy(){
+    public BaseComponent deepCopy() {
         return new BaseComponent(this.name,
                 this.description,
                 this.componentType,
                 this.tonnage,
                 this.level,
                 this.exteriorRequired,
-                this.constraints);
+                this.constraints,
+                this.crewTonnageRequirement,
+                this.staticCrew);
     }
 
     public String getName() {
@@ -56,6 +62,10 @@ public class BaseComponent {
         return tonnage;
     }
 
+    public void setTonnage(float tonnage) {
+        this.tonnage = tonnage;
+    }
+
     public boolean isExteriorRequired() {
         return exteriorRequired;
     }
@@ -68,11 +78,15 @@ public class BaseComponent {
         return level;
     }
 
-    public String getComponentType(){
-        return componentType;
+    public int[] getCrewTonnageRequirement() {
+        return crewTonnageRequirement;
     }
 
-    public void setTonnage(float tonnage) {
-        this.tonnage = tonnage;
+    public int getStaticCrew() {
+        return staticCrew;
+    }
+
+    public String getComponentType() {
+        return componentType;
     }
 }

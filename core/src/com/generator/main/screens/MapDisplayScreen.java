@@ -10,10 +10,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.generator.main.GeneratorMain;
-import com.generator.main.generators.HullGenerator;
-import com.generator.main.generators.RequirementsGenerator;
-import com.generator.main.generators.RoomGrowthManager;
-import com.generator.main.generators.RoomPlacer;
+import com.generator.main.generators.*;
 import com.generator.main.objects.MapTile;
 import com.generator.main.objects.ShipSpecification;
 import com.generator.main.utils.PolygonSubdivider;
@@ -23,24 +20,21 @@ public class MapDisplayScreen implements Screen {
     Polygon hullShape;
 
     final GeneratorMain main;
-    final HullGenerator hullGen;
-    final RequirementsGenerator reqGen;
     OrthographicCamera camera;
     final PolygonSubdivider subdivider;
     RoomPlacer placer;
     RoomGrowthManager growthManager;
     MapTile[][] baseLayer;
     ShipSpecification specification;
+    RoleBasedSpecificationGenerator roleBasedSpecificationGenerator;
 
     public MapDisplayScreen(GeneratorMain main) {
         this.main = main;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        this.reqGen = new RequirementsGenerator();
-        specification = reqGen.createSpecification();
-        this.hullGen = new HullGenerator(specification.getTotalHull(), 0.1F, 3);
         subdivider = new PolygonSubdivider(16);
+        roleBasedSpecificationGenerator = new RoleBasedSpecificationGenerator();
     }
 
     @Override
@@ -54,7 +48,9 @@ public class MapDisplayScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
             try {
-                hullShape = this.hullGen.generateSymmetricHull();
+                specification = roleBasedSpecificationGenerator.createSpecification();
+                HullGenerator hullGenerator = new HullGenerator(specification.getTotalHull(), 0.1F, 3);
+                hullShape = hullGenerator.generateSymmetricHull();
                 baseLayer = subdivider.polygonToArray(hullShape);
                 placer = new RoomPlacer(baseLayer, specification);
                 placer.placeAllRooms();

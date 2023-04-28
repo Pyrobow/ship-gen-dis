@@ -1,0 +1,27 @@
+{
+  "shipRoles": [{
+    "name": "Cargo Ship",
+    "description": "Test",
+    "requiredComponents": [
+      "jDrive",
+      "powerPlant",
+      "bridge",
+      "electronic",
+      "storage/Cargo",
+      "accommodation",
+      "storage/Fuel"
+    ],
+    "additionalComponents": [
+      "weaponMounts"
+    ],
+    "minLevelRequirements": {
+      "electronic": 1
+    },
+    "tonnageRequirements": {
+      "storage/Cargo": 0.25
+    },
+    "isMilitaryShip": false,
+    "isSystemShip": false,
+    "isDoubleBunkingAllowed": true
+  }]
+}
