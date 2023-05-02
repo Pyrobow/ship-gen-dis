@@ -56,6 +56,7 @@ public class MapDisplayScreen implements Screen {
                 placer.placeAllRooms();
                 growthManager = new RoomGrowthManager(specification, baseLayer);
                 growthManager.growAllRooms();
+                growthManager.placeAllCorridors();
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
