@@ -1,5 +1,6 @@
 package com.generator.main.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class WeaponMountComponent extends BaseComponent{
     private int[] crewTonnageRequirement;
     private int staticCrew;
     private String mountType;
+    private Color color;
 
     public WeaponMountComponent(){
         super();
@@ -36,8 +38,9 @@ public class WeaponMountComponent extends BaseComponent{
                                 int hardpointsUsed,
                                 ArrayList<WeaponComponent> assignedWeapons,
                                 int weaponSlots,
-                                String mountType){
-        super(name,description,componentType,tonnage,level,exteriorRequired,constraints,crewPerTon, staticCrew);
+                                String mountType,
+                                Color color){
+        super(name,description,componentType,tonnage,level,exteriorRequired,constraints,crewPerTon, staticCrew, color);
         this.hardpointsUsed = hardpointsUsed;
         this.assignedWeapons = assignedWeapons;
         this.weaponSlots = weaponSlots;
@@ -57,7 +60,8 @@ public class WeaponMountComponent extends BaseComponent{
                 hardpointsUsed,
                 assignedWeapons,
                 weaponSlots,
-                mountType);
+                mountType,
+                color);
     }
 
     public int getHardpointsUsed() {

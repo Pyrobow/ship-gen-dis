@@ -1,5 +1,6 @@
 package com.generator.main.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class BaseComponent {
@@ -13,6 +14,7 @@ public class BaseComponent {
     private ObjectMap<String, Integer> constraints;
     private int[] crewTonnageRequirement;
     private int staticCrew;
+    private Color color;
 
     public BaseComponent() {
     }
@@ -25,7 +27,8 @@ public class BaseComponent {
                          boolean exteriorRequired,
                          ObjectMap<String, Integer> constraints,
                          int[] crewPerTon,
-                         int staticCrew) {
+                         int staticCrew,
+                         Color color) {
         this.name = name;
         this.description = description;
         this.componentType = componentType;
@@ -35,6 +38,7 @@ public class BaseComponent {
         this.constraints = constraints;
         this.crewTonnageRequirement = crewPerTon;
         this.staticCrew = staticCrew;
+        this.color = color;
 
     }
 
@@ -47,7 +51,8 @@ public class BaseComponent {
                 this.exteriorRequired,
                 this.constraints,
                 this.crewTonnageRequirement,
-                this.staticCrew);
+                this.staticCrew,
+                this.color);
     }
 
     public String getName() {
@@ -84,6 +89,10 @@ public class BaseComponent {
 
     public int getStaticCrew() {
         return staticCrew;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public String getComponentType() {
