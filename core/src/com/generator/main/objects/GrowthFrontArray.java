@@ -52,7 +52,7 @@ public class GrowthFrontArray {
             newPoints.add(new Pair<>(coord.first() + directionChange.first(),
                     coord.second() + directionChange.second()));
             baselayer[coord.first() + directionChange.first()][coord.second() + directionChange.second()].setAssignedComponent(room);
-            baselayer[coord.first() + directionChange.first()][coord.second() + directionChange.second()].setColour(tempColor);
+            baselayer[coord.first() + directionChange.first()][coord.second() + directionChange.second()].setColour(room.getColor());
             baselayer[coord.first() + directionChange.first()][coord.second() + directionChange.second()].setIdent(TileIdents.ROOM);
         }
         updateOrthogonalFronts(directionChange);
