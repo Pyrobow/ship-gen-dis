@@ -17,7 +17,6 @@ public class RoomGrower {
     int size;
     int minSize;
     boolean finished;
-
     Random rand;
 
     public RoomGrower(BaseComponent room, MapTile[][] baseLayer) throws Exception {
@@ -28,22 +27,26 @@ public class RoomGrower {
         growthType = GrowthTypes.SQUARE;
         finished = false;
         size = 1;
-        minSize =(int) room.getTonnage();
+        minSize = (int) room.getTonnage();
         rand = new Random();
         invalidGrowthFronts = new ArrayList<>();
-        for (GrowthFrontArray front : validGrowthFronts){
-            if (!front.isFrontValid(baseLayer)){
+        for (GrowthFrontArray front : validGrowthFronts) {
+            if (!front.isFrontValid(baseLayer)) {
                 invalidGrowthFronts.add(front);
             }
         }
-        for (GrowthFrontArray front : invalidGrowthFronts){
+        for (GrowthFrontArray front : invalidGrowthFronts) {
             validGrowthFronts.remove(front);
         }
     }
 
-    public void growRoom(){
+    public Pair<Integer, Integer> getStartPoint() {
+        return startPoint;
+    }
+
+    public void growRoom() {
         updateGrowthFrontValidity();
-        switch (growthType){
+        switch (growthType) {
             case SQUARE:
                 growRoomRectangle();
                 break;
@@ -55,26 +58,26 @@ public class RoomGrower {
     }
 
     private void checkMinGrowthFinished() {
-        if (size >= minSize){
+        if (size >= minSize) {
             finished = true;
         }
     }
 
     private void updateGrowthFrontValidity() {
-        for (GrowthFrontArray front : validGrowthFronts){
-            if (!front.isFrontValid(baseLayer)){
+        for (GrowthFrontArray front : validGrowthFronts) {
+            if (!front.isFrontValid(baseLayer)) {
                 invalidGrowthFronts.add(front);
             }
         }
-        for (GrowthFrontArray front : invalidGrowthFronts){
+        for (GrowthFrontArray front : invalidGrowthFronts) {
             validGrowthFronts.remove(front);
         }
     }
 
     private void growRoomRectangle() {
-        if (validGrowthFronts.isEmpty()){
+        if (validGrowthFronts.isEmpty()) {
             growthType = GrowthTypes.LSHAPE;
-        }else{
+        } else {
             int selection = rand.nextInt(0, validGrowthFronts.size());
             validGrowthFronts.get(selection).growFrontOneStepForward(baseLayer);
             size = size + calculateSizeIncrease(validGrowthFronts.get(selection));
@@ -94,9 +97,9 @@ public class RoomGrower {
             GrowthFrontArray tempFront = new GrowthFrontArray(direction, initialPoints, room);
             output.add(tempFront);
         }
-        for (GrowthFrontArray front : output){
-            for (GrowthFrontArray orthFront : output){
-                if (front.checkIfFrontOrthogonal(orthFront)){
+        for (GrowthFrontArray front : output) {
+            for (GrowthFrontArray orthFront : output) {
+                if (front.checkIfFrontOrthogonal(orthFront)) {
                     front.getOrthogonalFronts().add(orthFront);
                 }
             }
@@ -118,6 +121,7 @@ public class RoomGrower {
         }
         return output;
     }
+
     public boolean isFinished() {
         return finished;
     }
